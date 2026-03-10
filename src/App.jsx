@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const SUPABASE_URL = "https://bxyyggjqqicpsmhsguuq.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4eXlnZ2pxcWljcHNtaHNndXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDcwODgsImV4cCI6MjA4ODcyMzA4OH0.e1aZDIOxuffNTKUhHteBhSFdIp0UfZNFZNm1jT4XvoY";
 
-// EMAILJS CONFIG — לשליחת מיילים (emailjs.com — חינמי)
+// EMAILJS CONFIG — לשליחת מיילים (emailjs.com — חיני)
 const EMAILJS_SERVICE_ID = "selaaa";
 const EMAILJS_TEMPLATE_ADMIN = "template_yccf0nj";
 const EMAILJS_TEMPLATE_USER = "template_grjqzgt";
