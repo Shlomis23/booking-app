@@ -11,7 +11,7 @@ const EMAILJS_SERVICE_ID = "selaaa";
 const EMAILJS_TEMPLATE_ADMIN = "template_yccf0nj";
 const EMAILJS_TEMPLATE_USER = "template_grjqzgt";
 const EMAILJS_PUBLIC_KEY = "c25pQpiYTUs6Tjt1T";
-const ADMIN_EMAIL = "Shlomi.sela@yashir.co.il";
+const ADMIN_EMAIL = "shlomi";
 
 // ADMIN PASSWORD — שנה לסיסמה שלך
 const ADMIN_PASSWORD = "admin123";
