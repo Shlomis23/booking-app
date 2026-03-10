@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 // ============================================================
 // SUPABASE CONFIG — החלף בפרטים שלך מ-Supabase dashboard
 // ============================================================
-const SUPABASE_URL = "https://myfnpubwwabzembegknz.supabase.co";
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15Zm5wdWJ3d2FiemVtYmVna256Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDE1NDksImV4cCI6MjA4ODcxNzU0OX0.vHEsPD5Ca-VwlpSrcw3DnqYHw2AV18QZuYgAZftt_cY";
+const SUPABASE_URL = "https://bxyyggjqqicpsmhsguuq.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4eXlnZ2pxcWljcHNtaHNndXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDcwODgsImV4cCI6MjA4ODcyMzA4OH0.e1aZDIOxuffNTKUhHteBhSFdIp0UfZNFZNm1jT4XvoY";
 
 // EMAILJS CONFIG — לשליחת מיילים (emailjs.com — חינמי)
 const EMAILJS_SERVICE_ID = "selaaa";
