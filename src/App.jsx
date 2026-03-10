@@ -8,8 +8,8 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 // EMAILJS CONFIG — לשליחת מיילים (emailjs.com — חינמי)
 const EMAILJS_SERVICE_ID = "selaaa";
-const EMAILJS_TEMPLATE_ADMIN = "template_grjqzgt";
-const EMAILJS_TEMPLATE_USER = "template_yccf0nj";
+const EMAILJS_TEMPLATE_ADMIN = "template_yccf0nj";
+const EMAILJS_TEMPLATE_USER = "template_grjqzgt";
 const EMAILJS_PUBLIC_KEY = "c25pQpiYTUs6Tjt1T";
 const ADMIN_EMAIL = "Shlomi.sela@yashir.co.il";
 
