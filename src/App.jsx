@@ -6,12 +6,9 @@ import { useState, useEffect } from "react";
 const SUPABASE_URL = "https://bxyyggjqqicpsmhsguuq.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ4eXlnZ2pxcWljcHNtaHNndXVxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxNDcwODgsImV4cCI6MjA4ODcyMzA4OH0.e1aZDIOxuffNTKUhHteBhSFdIp0UfZNFZNm1jT4XvoY";
 
-// EMAILJS CONFIG — לשליחת מיילים (emailjs.com — חינמי)
-const EMAILJS_SERVICE_ID = "selaaa";
-const EMAILJS_TEMPLATE_ADMIN = "template_grjqzgt";
-const EMAILJS_TEMPLATE_USER = "template_yccf0nj";
-const EMAILJS_PUBLIC_KEY = "c25pQpiYTUs6Tjt1T";
-const ADMIN_EMAIL = "Shlomi.sela@yashir.co.il";
+// BREVO CONFIG — לשליחת מיילים
+const BREVO_API_KEY = "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"; // החלף במפתח שלך
+const ADMIN_EMAIL = "Shlomi.sela@yashir.co.il"; // המייל שלך
 
 // ADMIN PASSWORD — שנה לסיסמה שלך
 const ADMIN_PASSWORD = "admin123";
@@ -156,23 +153,78 @@ async function deleteBlocking(id) {
 }
 
 // ============================================================
-// EMAILJS HELPER
+// BREVO EMAIL HELPERS
 // ============================================================
-async function sendEmail(templateId, params) {
+async function sendEmailToAdmin({ requester_name, topic, participants, room_name, date, start_time, end_time, requester_email }) {
   try {
-    await fetch("https://api.emailjs.com/api/v1.0/email/send", {
+    await fetch("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": BREVO_API_KEY,
+      },
       body: JSON.stringify({
-        service_id: EMAILJS_SERVICE_ID,
-        template_id: templateId,
-        user_id: EMAILJS_PUBLIC_KEY,
-        template_params: params,
+        sender: { name: "שריון חדרי הדרכה", email: ADMIN_EMAIL },
+        to: [{ email: ADMIN_EMAIL }],
+        subject: `בקשת שריון חדשה — ${room_name} | ${date}`,
+        htmlContent: `
+          <div dir="rtl" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: #1e3a5f;">בקשת שריון חדשה התקבלה</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>חדר:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${room_name}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>תאריך:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${date}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>שעות:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${start_time} – ${end_time}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>נושא:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${topic}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>מבקש:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${requester_name}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>משתתפים:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${participants}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>אימייל מבקש:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${requester_email}</td></tr>
+            </table>
+            <p style="color: #64748b; margin-top: 20px;">כנס למערכת כדי לאשר או לדחות את הבקשה.</p>
+            <p style="color: #94a3b8; font-size: 12px;">מערכת שריון חדרי הדרכה — ביטוח ישיר יקנעם</p>
+          </div>
+        `,
       }),
     });
   } catch (e) {
-    console.warn("Email send failed:", e);
+    console.warn("Email to admin failed:", e);
   }
+}
+
+async function sendEmailToUser({ to_email, requester_name, status, room_name, date, start_time, end_time, topic }) {
+  const isApproved = status.includes("אושר");
+  try {
+    await fetch("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": BREVO_API_KEY,
+      },
+      body: JSON.stringify({
+        sender: { name: "שריון חדרי הדרכה", email: ADMIN_EMAIL },
+        to: [{ email: to_email }],
+        subject: `עדכון בקשת שריון — ${isApproved ? "אושרה ✅" : "נדחתה ❌"}`,
+        htmlContent: `
+          <div dir="rtl" style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+            <h2 style="color: ${isApproved ? "#16a34a" : "#dc2626"};">
+              בקשת השריון שלך ${isApproved ? "אושרה ✅" : "נדחתה ❌"}
+            </h2>
+            <p>שלום ${requester_name},</p>
+            <table style="width: 100%; border-collapse: collapse;">
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>חדר:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${room_name}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>תאריך:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${date}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>שעות:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${start_time} – ${end_time}</td></tr>
+              <tr><td style="padding: 8px; border-bottom: 1px solid #eee;"><strong>נושא:</strong></td><td style="padding: 8px; border-bottom: 1px solid #eee;">${topic}</td></tr>
+            </table>
+            <p style="color: #64748b; margin-top: 20px;">לשאלות ניתן לפנות למנהל ישירות.</p>
+            <p style="color: #94a3b8; font-size: 12px;">מערכת שריון חדרי הדרכה — ביטוח ישיר יקנעם</p>
+          </div>
+        `,
+      }),
+    });
+  } catch (e) {
+    console.warn("Email to user failed:", e);
+  }
+}
 }
 
 // ============================================================
@@ -268,8 +320,7 @@ export default function App() {
     try {
       await createBooking({ room_id, date, start_time, end_time, requester_name, topic, participants: Number(participants), requester_email, notes, status: "pending" });
       const room = ROOMS.find((r) => r.id === room_id);
-      await sendEmail(EMAILJS_TEMPLATE_ADMIN, {
-        to_email: ADMIN_EMAIL,
+      await sendEmailToAdmin({
         requester_name, topic, participants,
         room_name: room.name,
         date, start_time, end_time,
@@ -286,7 +337,7 @@ export default function App() {
 
   async function handleApprove(booking) {
     await updateBookingStatus(booking.id, "approved");
-    await sendEmail(EMAILJS_TEMPLATE_USER, {
+    await sendEmailToUser({
       to_email: booking.requester_email,
       requester_name: booking.requester_name,
       status: "אושר ✅",
@@ -302,7 +353,7 @@ export default function App() {
 
   async function handleReject(booking) {
     await updateBookingStatus(booking.id, "rejected");
-    await sendEmail(EMAILJS_TEMPLATE_USER, {
+    await sendEmailToUser({
       to_email: booking.requester_email,
       requester_name: booking.requester_name,
       status: "נדחה ❌",
