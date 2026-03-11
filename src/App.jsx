@@ -8,7 +8,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 // BREVO CONFIG — לשליחת מיילים
 const BREVO_API_KEY = "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"; // החלף במפתח שלך
-const ADMIN_EMAIL = "Shlomi.sela@yashir.co.il"; // המייל שלך
+const ADMIN_EMAIL = "Shlomi.sela@yashir.co.il"; // המיל שלך
 
 // ADMIN PASSWORD — שנה לסיסמה שלך
 const ADMIN_PASSWORD = "admin123";
