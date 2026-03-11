@@ -225,7 +225,6 @@ async function sendEmailToUser({ to_email, requester_name, status, room_name, da
     console.warn("Email to user failed:", e);
   }
 }
-}
 
 // ============================================================
 // MAIN APP
