@@ -123,7 +123,7 @@ export default function BookingFormPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      const result = await callFunction('create-booking', {
+      const result = await callFunction<{ cancellationCode?: string }>('create-booking', {
         requesterName: form.requesterName.trim(),
         requesterEmail: form.requesterEmail.trim().toLowerCase(),
         eventDate: form.eventDate,

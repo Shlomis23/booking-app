@@ -28,6 +28,7 @@ export interface Booking {
   start_time: string;  // HH:MM:SS
   duration_minutes: number;
   participant_count: number;
+  meeting_purpose: string;
   notes?: string;
   room_id?: string;
   second_room_id?: string;
