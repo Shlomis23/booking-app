@@ -167,7 +167,7 @@ export default function BookingFormPage() {
           </div>
           <div className="success-fade-1">
             <h2 className="text-2xl font-bold text-gray-900">הבקשה התקבלה!</h2>
-            <p className="text-gray-500 text-sm mt-1">נשלח אליך אימייל עם פרטי הבקשה.<br />הבקשה ממתינה לאישור הרכז.</p>
+            <p className="text-gray-500 text-sm mt-1">נשלח אליך אימייל עם פרטי הבקשה.<br />הבקשה ממתינה לאישור אחראי החדרים.</p>
           </div>
         </div>
 
@@ -190,7 +190,7 @@ export default function BookingFormPage() {
           <ol className="space-y-1.5 text-amber-700">
             <li className="flex items-start gap-2">
               <span className="w-5 h-5 bg-amber-200 text-amber-800 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span>
-              הרכז יקבל הודעה על בקשתך
+              אחראי החדרים יקבל הודעה על בקשתך
             </li>
             <li className="flex items-start gap-2">
               <span className="w-5 h-5 bg-amber-200 text-amber-800 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span>
@@ -217,7 +217,7 @@ export default function BookingFormPage() {
     <div className="max-w-2xl mx-auto space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">הזמנת חדר הדרכה</h1>
-        <p className="text-gray-500 text-sm mt-1">מלא את הפרטים ושלח בקשת שריון. הבקשה תועבר לאישור הרכז.</p>
+        <p className="text-gray-500 text-sm mt-1">מלא את הפרטים ושלח בקשת שריון. הבקשה תועבר לאישור אחראי החדרים.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
@@ -332,7 +332,7 @@ export default function BookingFormPage() {
                 {forceSpecial ? (
                   <div className="text-sm text-purple-700 bg-purple-50 border border-purple-200 rounded-lg p-3">
                     <p className="font-semibold">⚠️ מספר המשתתפים חורג מקיבולת כל החדרים הקיימים.</p>
-                    <p className="mt-1 text-xs">הבקשה תוגש כבקשה מיוחדת — הרכז יקצה שני חדרים בהתאם.</p>
+                    <p className="mt-1 text-xs">הבקשה תוגש כבקשה מיוחדת — אחראי החדרים יקצה שני חדרים בהתאם.</p>
                   </div>
                 ) : availableRooms.length > 0 ? (
                   <div className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg p-3">
@@ -342,7 +342,7 @@ export default function BookingFormPage() {
                         <li key={r.id} className="text-xs">• {r.name} ({r.capacity} מקומות)</li>
                       ))}
                     </ul>
-                    <p className="text-xs mt-1.5 text-green-600">הרכז יקצה חדר ספציפי בעת האישור.</p>
+                    <p className="text-xs mt-1.5 text-green-600">אחראי החדרים יקצה חדר ספציפי בעת האישור.</p>
                   </div>
                 ) : (
                   durationValue > 0 && form.eventDate && form.startTime && (

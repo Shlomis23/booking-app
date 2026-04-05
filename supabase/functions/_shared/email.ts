@@ -132,7 +132,7 @@ export async function sendBookingReceived(info: BookingInfo): Promise<void> {
   const html = baseTemplate(`
     <h2>בקשת השריון שלך התקבלה</h2>
     <p style="margin-bottom:16px">שלום ${info.requesterName},<br>
-    קיבלנו את בקשת השריון שלך. הבקשה ממתינה לאישור הרכז.</p>
+    קיבלנו את בקשת השריון שלך. הבקשה ממתינה לאישור אחראי החדרים.</p>
     <table class="info-table">
       ${infoRow('תאריך', formatDate(info.eventDate))}
       ${infoRow('שעת התחלה', info.startTime.slice(0,5))}
@@ -263,7 +263,7 @@ export async function sendRescheduleReceived(info: ChangeInfo): Promise<void> {
   const html = baseTemplate(`
     <h2>בקשת שינוי מועד התקבלה</h2>
     <p style="margin-bottom:16px">שלום ${info.requesterName},<br>
-    קיבלנו את בקשתך לשינוי מועד השריון. הבקשה ממתינה לאישור הרכז.</p>
+    קיבלנו את בקשתך לשינוי מועד השריון. הבקשה ממתינה לאישור אחראי החדרים.</p>
     <table class="info-table">
       ${infoRow('מועד מקורי', `${formatDate(info.originalDate)} בשעה ${info.originalTime.slice(0,5)}`)}
       ${infoRow('משך מקורי', formatDuration(info.originalDuration))}

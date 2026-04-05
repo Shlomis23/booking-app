@@ -124,7 +124,7 @@ export default function AvailabilityPage() {
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">לוח זמינות חדרים</h1>
-            <p className="text-white/70 text-sm">בחר תאריך, בחן זמינות ושלח בקשת שריון — הרכז יאשר ויקצה חדר</p>
+            <p className="text-white/70 text-sm">בחר תאריך, בחן זמינות ושלח בקשת שריון — אחראי החדרים יאשר ויקצה חדר</p>
           </div>
           <button
             onClick={() => navigate('/book')}

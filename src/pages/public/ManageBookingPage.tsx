@@ -189,7 +189,7 @@ export default function ManageBookingPage() {
             )}
             {booking.admin_notes && (
               <div className="bg-red-50 rounded-lg p-3 mt-2">
-                <p className="text-xs font-medium text-red-700">הערת הרכז:</p>
+                <p className="text-xs font-medium text-red-700">הערת אחראי החדרים:</p>
                 <p className="text-sm text-red-600 mt-0.5">{booking.admin_notes}</p>
               </div>
             )}
