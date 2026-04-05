@@ -7,8 +7,8 @@ import Badge from '../../components/ui/Badge';
 import { toIsraelDateStr, getWeekStart, getWeekDays, DAY_NAMES_HE, MONTH_NAMES_HE, timesOverlap, isRoomBlockedOnDate, formatTime, formatDuration, statusLabel } from '../../lib/utils';
 import type { Booking, Room } from '../../types';
 
-const START_MINUTES = 7 * 60 + 30; // 7:30
-const END_MINUTES = 18 * 60;        // 18:00
+const START_MINUTES = 7 * 60 + 30;
+const END_MINUTES = 18 * 60;
 const SLOT_MINUTES = 30;
 
 function generateSlots(): string[] {
@@ -23,7 +23,7 @@ function generateSlots(): string[] {
 const SLOTS = generateSlots();
 
 const ROOM_COLORS = [
-  'bg-violet-100 text-blue-800 border-violet-200',
+  'bg-violet-100 text-violet-800 border-violet-200',
   'bg-purple-100 text-purple-800 border-purple-200',
   'bg-emerald-100 text-emerald-800 border-emerald-200',
   'bg-orange-100 text-orange-800 border-orange-200',
@@ -32,17 +32,17 @@ const ROOM_COLORS = [
 
 export default function CalendarPage() {
   const ready = useAdminGuard();
-  const [view, setView] = useState<'week' | 'day'>('week');
   const [rooms, setRooms] = useState<Room[]>([]);
   const [bookings, setBookings] = useState<Booking[]>([]);
-  const [weekStart, setWeekStart] = useState(() => getWeekStart(new Date()));
   const [selectedDay, setSelectedDay] = useState(() => new Date());
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const weekDays = getWeekDays(weekStart);
+  const selectedDateStr = toIsraelDateStr(selectedDay);
 
   const fetchData = useCallback(async () => {
+    const weekStart = getWeekStart(selectedDay);
+    const weekDays = getWeekDays(weekStart);
     const start = toIsraelDateStr(weekDays[0]);
     const end = toIsraelDateStr(weekDays[6]);
     setLoading(true);
@@ -55,7 +55,8 @@ export default function CalendarPage() {
     setRooms((r ?? []) as Room[]);
     setBookings((b ?? []) as Booking[]);
     setLoading(false);
-  }, [weekStart]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDateStr]);
 
   useEffect(() => { if (ready) fetchData(); }, [ready, fetchData]);
 
@@ -69,71 +70,78 @@ export default function CalendarPage() {
 
   function getSlotType(room: Room, dateStr: string, slot: string): 'available' | 'blocked' | 'booked' {
     if (isRoomBlockedOnDate(room, dateStr)) return 'blocked';
-    const bs = getBookingsForSlot(room.id, dateStr, slot);
-    return bs.length > 0 ? 'booked' : 'available';
+    return getBookingsForSlot(room.id, dateStr, slot).length > 0 ? 'booked' : 'available';
+  }
+
+  function prevDay() {
+    const d = new Date(selectedDay);
+    d.setDate(d.getDate() - 1);
+    setSelectedDay(d);
+  }
+
+  function nextDay() {
+    const d = new Date(selectedDay);
+    d.setDate(d.getDate() + 1);
+    setSelectedDay(d);
+  }
+
+  function goToday() {
+    setSelectedDay(new Date());
+  }
+
+  function handleDateInput(e: React.ChangeEvent<HTMLInputElement>) {
+    if (e.target.value) {
+      setSelectedDay(new Date(e.target.value + 'T12:00:00'));
+    }
   }
 
   if (!ready) return null;
 
-  const weekLabel = (() => {
-    const s = weekDays[0], e = weekDays[6];
-    return `${s.getDate()} ${MONTH_NAMES_HE[s.getMonth()]} — ${e.getDate()} ${MONTH_NAMES_HE[e.getMonth()]} ${e.getFullYear()}`;
-  })();
-
-  const displayDate = view === 'day' ? selectedDay : null;
-  const displayDays = view === 'week' ? weekDays : [selectedDay];
+  const dayLabel = `${DAY_NAMES_HE[selectedDay.getDay()]} ${selectedDay.getDate()} ${MONTH_NAMES_HE[selectedDay.getMonth()]} ${selectedDay.getFullYear()}`;
+  const isToday = selectedDateStr === toIsraelDateStr(new Date());
 
   return (
     <AdminLayout>
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">לוח שנה</h1>
-            <p className="text-sm text-gray-500 mt-1">{view === 'week' ? weekLabel : toIsraelDateStr(selectedDay)}</p>
+            <p className="text-sm text-gray-500 mt-1">{dayLabel}</p>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex rounded-lg border border-gray-200 overflow-hidden">
-              <button
-                onClick={() => setView('week')}
-                className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'week' ? 'bg-violet-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
-              >
-                שבועי
+
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Date picker */}
+            <input
+              type="date"
+              value={selectedDateStr}
+              onChange={handleDateInput}
+              className="border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500"
+            />
+
+            {/* Navigation */}
+            <div className="flex items-center gap-1">
+              <button onClick={nextDay} className="p-2 hover:bg-violet-50 rounded-xl transition-colors text-gray-500 hover:text-violet-600">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
               </button>
               <button
-                onClick={() => setView('day')}
-                className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'day' ? 'bg-violet-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                onClick={goToday}
+                className={`text-sm px-3 py-1.5 rounded-xl font-medium transition-colors ${
+                  isToday ? 'bg-violet-600 text-white' : 'bg-violet-100 text-violet-700 hover:bg-violet-200'
+                }`}
               >
-                יומי
+                היום
+              </button>
+              <button onClick={prevDay} className="p-2 hover:bg-violet-50 rounded-xl transition-colors text-gray-500 hover:text-violet-600">
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
               </button>
             </div>
-            <button onClick={() => { const d = new Date(weekStart); d.setDate(d.getDate() - 7); setWeekStart(d); }} className="p-2 hover:bg-gray-100 rounded-lg">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
-            </button>
-            <button onClick={() => { setWeekStart(getWeekStart(new Date())); setSelectedDay(new Date()); }} className="text-sm text-violet-600 hover:underline px-2">היום</button>
-            <button onClick={() => { const d = new Date(weekStart); d.setDate(d.getDate() + 7); setWeekStart(d); }} className="p-2 hover:bg-gray-100 rounded-lg">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-            </button>
           </div>
         </div>
-
-        {/* Day tabs (week view) */}
-        {view === 'week' && (
-          <div className="bg-white rounded-xl border border-gray-200 grid grid-cols-7">
-            {weekDays.map((day, i) => {
-              const ds = toIsraelDateStr(day);
-              const isToday = ds === toIsraelDateStr(new Date());
-              const isSelected = ds === toIsraelDateStr(selectedDay);
-              return (
-                <button key={i} onClick={() => { setSelectedDay(day); setView('day'); }}
-                  className={`py-3 flex flex-col items-center transition-colors rounded-xl ${isSelected ? 'bg-violet-50' : 'hover:bg-gray-50'}`}>
-                  <span className="text-xs text-gray-500">{DAY_NAMES_HE[day.getDay()]}</span>
-                  <span className={`text-lg font-semibold mt-0.5 ${isToday ? 'text-violet-600' : 'text-gray-800'}`}>{day.getDate()}</span>
-                  {isToday && <span className="w-1.5 h-1.5 bg-violet-500 rounded-full mt-0.5" />}
-                </button>
-              );
-            })}
-          </div>
-        )}
 
         {/* Calendar grid */}
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
@@ -142,49 +150,46 @@ export default function CalendarPage() {
               <div className="animate-spin w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full" />
             </div>
           ) : (
-            <div className="overflow-auto max-h-[600px]">
+            <div className="overflow-auto max-h-[65vh]">
               <table className="w-full text-xs border-collapse">
                 <thead className="sticky top-0 bg-white z-10 border-b border-gray-100">
                   <tr>
                     <th className="px-3 py-2 text-gray-500 font-medium w-14 text-right">שעה</th>
-                    {displayDays.map((day, di) => (
-                      rooms.map((room, ri) => (
-                        <th key={`${di}-${ri}`} className="px-2 py-2 text-center">
-                          {di === 0 && <div className="font-semibold text-gray-700" style={{ color: ROOM_COLORS[ri % ROOM_COLORS.length].split(' ')[1].replace('text-', '') }}>{room.name}</div>}
-                          {view === 'week' && <div className="text-gray-400 font-normal">{DAY_NAMES_HE[day.getDay()]} {day.getDate()}</div>}
-                        </th>
-                      ))
+                    {rooms.map((room, ri) => (
+                      <th key={room.id} className="px-2 py-2 text-center">
+                        <div className={`font-semibold text-xs px-2 py-1 rounded-lg ${ROOM_COLORS[ri % ROOM_COLORS.length]}`}>
+                          {room.name}
+                        </div>
+                        <div className="text-gray-400 font-normal mt-0.5">{room.capacity} מקומות</div>
+                      </th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {SLOTS.map(slot => (
-                    <tr key={slot} className="border-b border-gray-50">
-                      <td className="px-3 py-0.5 text-gray-400 whitespace-nowrap">{slot}</td>
-                      {displayDays.map((day, di) => {
-                        const dateStr = toIsraelDateStr(day);
-                        return rooms.map((room, ri) => {
-                          const type = getSlotType(room, dateStr, slot);
-                          const bks = type === 'booked' ? getBookingsForSlot(room.id, dateStr, slot) : [];
-                          const colorClass = ROOM_COLORS[ri % ROOM_COLORS.length];
-                          return (
-                            <td key={`${di}-${ri}`} className="p-0.5">
-                              {type === 'blocked' ? (
-                                <div className="bg-gray-100 border border-gray-200 rounded h-6" title="חסום" />
-                              ) : bks.length > 0 ? (
-                                <div
-                                  className={`border rounded h-6 flex items-center justify-center cursor-pointer ${colorClass}`}
-                                  onClick={() => setSelectedBooking(bks[0])}
-                                  title={bks[0].requester_name}
-                                >
-                                  <span className="truncate px-1 text-xs">{bks[0].requester_name.split(' ')[0]}</span>
-                                </div>
-                              ) : (
-                                <div className="h-6" />
-                              )}
-                            </td>
-                          );
-                        });
+                    <tr key={slot} className="border-b border-gray-50 hover:bg-gray-50/50">
+                      <td className="px-3 py-0.5 text-gray-400 whitespace-nowrap font-medium">{slot}</td>
+                      {rooms.map((room, ri) => {
+                        const type = getSlotType(room, selectedDateStr, slot);
+                        const bks = type === 'booked' ? getBookingsForSlot(room.id, selectedDateStr, slot) : [];
+                        const colorClass = ROOM_COLORS[ri % ROOM_COLORS.length];
+                        return (
+                          <td key={room.id} className="p-0.5">
+                            {type === 'blocked' ? (
+                              <div className="bg-gray-100 border border-gray-200 rounded h-7" title="חסום" />
+                            ) : bks.length > 0 ? (
+                              <div
+                                className={`border rounded h-7 flex items-center justify-center cursor-pointer hover:opacity-80 transition-opacity ${colorClass}`}
+                                onClick={() => setSelectedBooking(bks[0])}
+                                title={bks[0].requester_name}
+                              >
+                                <span className="truncate px-1 text-xs font-medium">{bks[0].requester_name.split(' ')[0]}</span>
+                              </div>
+                            ) : (
+                              <div className="h-7" />
+                            )}
+                          </td>
+                        );
                       })}
                     </tr>
                   ))}
@@ -195,13 +200,15 @@ export default function CalendarPage() {
         </div>
 
         {/* Room color legend */}
-        <div className="flex items-center gap-4 text-xs text-gray-600">
-          {rooms.map((r, i) => (
-            <div key={r.id} className={`flex items-center gap-1.5 px-2 py-1 rounded-full border ${ROOM_COLORS[i % ROOM_COLORS.length]}`}>
-              <span>{r.name}</span>
-            </div>
-          ))}
-        </div>
+        {rooms.length > 0 && (
+          <div className="flex items-center gap-3 flex-wrap text-xs">
+            {rooms.map((r, i) => (
+              <div key={r.id} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full border font-medium ${ROOM_COLORS[i % ROOM_COLORS.length]}`}>
+                {r.name}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Booking detail modal */}
@@ -210,6 +217,7 @@ export default function CalendarPage() {
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between"><dt className="text-gray-500">מגיש</dt><dd className="font-medium">{selectedBooking.requester_name}</dd></div>
             <div className="flex justify-between"><dt className="text-gray-500">אימייל</dt><dd>{selectedBooking.requester_email}</dd></div>
+            <div className="flex justify-between"><dt className="text-gray-500">מטרת הפגישה</dt><dd>{selectedBooking.meeting_purpose}</dd></div>
             <div className="flex justify-between"><dt className="text-gray-500">תאריך</dt><dd>{selectedBooking.event_date}</dd></div>
             <div className="flex justify-between"><dt className="text-gray-500">שעה</dt><dd>{formatTime(selectedBooking.start_time)}</dd></div>
             <div className="flex justify-between"><dt className="text-gray-500">משך</dt><dd>{formatDuration(selectedBooking.duration_minutes)}</dd></div>

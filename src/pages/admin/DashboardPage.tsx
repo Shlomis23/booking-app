@@ -68,8 +68,8 @@ export default function DashboardPage() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">
           <StatCard label="ממתינים לאישור" value={stats.pending} color="yellow" icon="⏳" />
-          <StatCard label="שריונות היום" value={stats.todayApproved} color="blue" icon="📅" />
-          <StatCard label="שריונות פעילים" value={stats.totalActive} color="green" icon="✅" />
+          <StatCard label="שריונים היום" value={stats.todayApproved} color="blue" icon="📅" />
+          <StatCard label="שריונים פעילים" value={stats.totalActive} color="green" icon="✅" />
         </div>
 
         {/* Pending bookings */}
@@ -157,7 +157,8 @@ function PendingBookingRow({ booking, onApprove, onReject }: {
           )}
         </div>
         <p className="text-xs text-gray-500 mb-0.5">{booking.requester_email}</p>
-        <p className="text-sm text-gray-700">
+        <p className="text-sm text-gray-700 font-medium">{booking.meeting_purpose}</p>
+        <p className="text-sm text-gray-600 mt-0.5">
           {formatDate(booking.event_date)} | {formatTime(booking.start_time)} | {formatDuration(booking.duration_minutes)} | {booking.participant_count} משתתפים
         </p>
         <p className="text-xs text-gray-400 mt-0.5">

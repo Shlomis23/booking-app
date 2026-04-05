@@ -77,7 +77,7 @@ export default function BookingsPage() {
     <AdminLayout>
       <div className="space-y-5">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">כל השריונות</h1>
+          <h1 className="text-2xl font-bold text-gray-900">כל השריונים</h1>
           <p className="text-sm text-gray-500 mt-1">רשימה מלאה של כל בקשות השריון</p>
         </div>
 
@@ -127,7 +127,7 @@ export default function BookingsPage() {
               <div className="animate-spin w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full" />
             </div>
           ) : bookings.length === 0 ? (
-            <div className="py-16 text-center text-gray-400">אין שריונות להצגה</div>
+            <div className="py-16 text-center text-gray-400">אין שריונים להצגה</div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">

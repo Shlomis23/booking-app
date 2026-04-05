@@ -120,8 +120,8 @@ export default function RoomsPage() {
             {rooms.map(room => (
               <div key={room.id} className="bg-white rounded-xl border border-gray-200 p-5">
                 <div className="flex items-start justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <h3 className="font-semibold text-gray-900 text-lg">{room.name}</h3>
                       {!room.is_active && <Badge color="red">לא פעיל</Badge>}
                     </div>
@@ -145,7 +145,7 @@ export default function RoomsPage() {
                     )}
                   </div>
 
-                  <div className="flex gap-2 shrink-0">
+                  <div className="flex flex-col gap-2 shrink-0">
                     <Button size="sm" variant="secondary" onClick={() => openEdit(room)}>עריכה</Button>
                     <Button size="sm" variant="secondary" onClick={() => setBlockRoom(room)}>חסימת תאריכים</Button>
                     <Button
