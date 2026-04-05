@@ -32,7 +32,7 @@ export default function Button({
   return (
     <button
       className={`
-        inline-flex items-center gap-2 font-medium rounded-xl transition-all
+        inline-flex items-center justify-center gap-2 font-medium rounded-xl transition-all
         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500
         ${variants[variant]} ${sizes[size]} ${className}
       `}
