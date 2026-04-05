@@ -123,7 +123,7 @@ export default function BookingFormPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      const result = await callFunction<{ cancellationCode?: string }>('create-booking', {
+      const result = await callFunction<{ cancellationCode?: string; bookingId?: string }>('create-booking', {
         requesterName: form.requesterName.trim(),
         requesterEmail: form.requesterEmail.trim().toLowerCase(),
         eventDate: form.eventDate,
@@ -134,7 +134,16 @@ export default function BookingFormPage() {
         notes: form.notes.trim() || null,
         isSpecial: isSpecial || forceSpecial,
       });
-      if (result?.cancellationCode) setBookingCode(result.cancellationCode);
+      if (result?.cancellationCode) {
+        setBookingCode(result.cancellationCode);
+      } else if (result?.bookingId) {
+        const { data } = await supabase
+          .from('bookings')
+          .select('cancellation_code')
+          .eq('id', result.bookingId)
+          .single();
+        if (data?.cancellation_code) setBookingCode(data.cancellation_code);
+      }
       setSubmitted(true);
     } catch (err) {
       setErrors({ requesterEmail: err instanceof Error ? err.message : 'שגיאה בשמירת הבקשה' });
@@ -146,34 +155,55 @@ export default function BookingFormPage() {
   if (submitted) {
     return (
       <div className="max-w-lg mx-auto py-10 space-y-5">
-        <div className="text-center space-y-3">
-          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
-            <svg className="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-            </svg>
+        {/* Animated checkmark */}
+        <div className="text-center space-y-4">
+          <div className="relative w-24 h-24 mx-auto">
+            <div className="absolute inset-0 bg-emerald-400 rounded-full success-icon-ring" />
+            <div className="relative w-24 h-24 bg-emerald-500 rounded-full flex items-center justify-center success-icon">
+              <svg className="w-12 h-12 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path className="checkmark-path" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">הבקשה התקבלה!</h2>
-          <p className="text-gray-500 text-sm">נשלח אליך אימייל עם פרטי הבקשה.<br />הבקשה ממתינה לאישור הרכז.</p>
+          <div className="success-fade-1">
+            <h2 className="text-2xl font-bold text-gray-900">הבקשה התקבלה!</h2>
+            <p className="text-gray-500 text-sm mt-1">נשלח אליך אימייל עם פרטי הבקשה.<br />הבקשה ממתינה לאישור הרכז.</p>
+          </div>
         </div>
 
-        {bookingCode && (
-          <div className="bg-violet-50 border-2 border-dashed border-violet-300 rounded-2xl p-6 text-center">
-            <p className="text-sm text-gray-500 mb-2">מספר ההזמנה שלך</p>
+        {/* Booking code */}
+        <div className="success-fade-2 bg-violet-50 border-2 border-dashed border-violet-300 rounded-2xl p-6 text-center">
+          <p className="text-sm text-gray-500 mb-2">מספר ההזמנה שלך</p>
+          {bookingCode ? (
             <p className="text-4xl font-bold text-violet-700 tracking-widest font-mono">{bookingCode}</p>
-            <p className="text-xs text-gray-400 mt-3">שמור מספר זה — תצטרך אותו כדי לעקוב אחר הבקשה, לשנות מועד או לבטל</p>
-          </div>
-        )}
+          ) : (
+            <div className="h-10 flex items-center justify-center">
+              <div className="animate-spin w-6 h-6 border-4 border-violet-400 border-t-transparent rounded-full" />
+            </div>
+          )}
+          <p className="text-xs text-gray-400 mt-3">שמור מספר זה — תצטרך אותו כדי לעקוב אחר הבקשה, לשנות מועד או לבטל</p>
+        </div>
 
-        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
-          <p className="font-semibold mb-1">מה קורה עכשיו?</p>
-          <ol className="space-y-1 text-amber-700 list-decimal list-inside">
-            <li>הרכז יקבל הודעה על בקשתך</li>
-            <li>לאחר בדיקה יאשר ויקצה חדר — או ייצור קשר</li>
-            <li>תקבל אימייל עם אישור סופי</li>
+        {/* What happens next */}
+        <div className="success-fade-3 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+          <p className="font-semibold mb-2">מה קורה עכשיו?</p>
+          <ol className="space-y-1.5 text-amber-700">
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 bg-amber-200 text-amber-800 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">1</span>
+              הרכז יקבל הודעה על בקשתך
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 bg-amber-200 text-amber-800 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">2</span>
+              לאחר בדיקה יאשר ויקצה חדר — או ייצור קשר
+            </li>
+            <li className="flex items-start gap-2">
+              <span className="w-5 h-5 bg-amber-200 text-amber-800 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mt-0.5">3</span>
+              תקבל אימייל עם אישור סופי
+            </li>
           </ol>
         </div>
 
-        <div className="flex gap-3">
+        <div className="success-fade-4 flex gap-3">
           <Button onClick={() => navigate('/')} className="flex-1">חזרה ללוח זמינות</Button>
           <Button variant="secondary" onClick={() => { setSubmitted(false); setBookingCode(''); setForm(f => ({ ...f, requesterName: '', requesterEmail: '', notes: '' })); }} className="flex-1">
             הגש בקשה נוספת

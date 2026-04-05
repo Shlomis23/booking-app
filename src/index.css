@@ -32,3 +32,44 @@ body {
 th, td {
   text-align: right;
 }
+
+/* Success screen animations */
+@keyframes successScale {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.15); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes checkDraw {
+  from { stroke-dashoffset: 30; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+@keyframes pulseRing {
+  0%   { transform: scale(1);    opacity: 0.4; }
+  100% { transform: scale(1.6);  opacity: 0; }
+}
+
+.success-icon {
+  animation: successScale 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.success-icon-ring {
+  animation: pulseRing 1s 0.4s ease-out forwards;
+}
+
+.checkmark-path {
+  stroke-dasharray: 30;
+  stroke-dashoffset: 30;
+  animation: checkDraw 0.4s 0.35s ease forwards;
+}
+
+.success-fade-1 { opacity: 0; animation: fadeUp 0.4s 0.55s ease both; }
+.success-fade-2 { opacity: 0; animation: fadeUp 0.4s 0.7s  ease both; }
+.success-fade-3 { opacity: 0; animation: fadeUp 0.4s 0.85s ease both; }
+.success-fade-4 { opacity: 0; animation: fadeUp 0.4s 1.0s  ease both; }
