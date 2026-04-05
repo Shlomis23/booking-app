@@ -124,7 +124,7 @@ export default function BookingsPage() {
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           {loading ? (
             <div className="flex items-center justify-center h-48">
-              <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full" />
+              <div className="animate-spin w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full" />
             </div>
           ) : bookings.length === 0 ? (
             <div className="py-16 text-center text-gray-400">אין שריונות להצגה</div>
@@ -192,7 +192,7 @@ export default function BookingsPage() {
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">סיבת הביטול (אופציונלי)</label>
               <textarea
-                className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
                 rows={3}
                 placeholder="הסבר למגיש מדוע השריון בוטל..."
                 value={cancelNotes}

@@ -196,7 +196,7 @@ export default function BookingFormPage() {
         <Card>
           <CardHeader><h2 className="font-semibold text-gray-800">פרטי האירוע</h2></CardHeader>
           <CardBody className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <Input
                 label="תאריך"
                 type="date"
@@ -220,7 +220,7 @@ export default function BookingFormPage() {
               <label className="block text-sm font-medium text-gray-700">
                 משך האירוע <span className="text-red-500">*</span>
               </label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                 {DURATION_OPTIONS.map(opt => (
                   <button
                     type="button"
@@ -228,8 +228,8 @@ export default function BookingFormPage() {
                     onClick={() => set('durationMinutes', opt.value)}
                     className={`py-2 px-3 rounded-lg border text-sm font-medium transition-colors ${
                       form.durationMinutes === opt.value
-                        ? 'bg-blue-600 border-blue-600 text-white'
-                        : 'bg-white border-gray-300 text-gray-700 hover:border-blue-400'
+                        ? 'bg-violet-600 border-violet-600 text-white'
+                        : 'bg-white border-gray-300 text-gray-700 hover:border-violet-400'
                     }`}
                   >
                     {opt.label}
@@ -265,7 +265,7 @@ export default function BookingFormPage() {
                 מטרת הפגישה <span className="text-red-500">*</span>
               </label>
               <textarea
-                className={`block w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none ${errors.meetingPurpose ? 'border-red-400' : 'border-gray-300'}`}
+                className={`block w-full rounded-lg border px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none ${errors.meetingPurpose ? 'border-red-400' : 'border-gray-300'}`}
                 rows={2}
                 placeholder="תאר בקצרה את מטרת הפגישה..."
                 value={form.meetingPurpose}
@@ -318,7 +318,7 @@ export default function BookingFormPage() {
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">הערות (אופציונלי)</label>
               <textarea
-                className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
                 rows={3}
                 placeholder="פרטים נוספים על האירוע..."
                 value={form.notes}

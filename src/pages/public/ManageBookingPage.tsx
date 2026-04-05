@@ -109,7 +109,7 @@ export default function ManageBookingPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-64">
-        <div className="animate-spin w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full" />
+        <div className="animate-spin w-10 h-10 border-4 border-violet-500 border-t-transparent rounded-full" />
       </div>
     );
   }
@@ -154,7 +154,7 @@ export default function ManageBookingPage() {
         </div>
       )}
       {rescheduleDone && (
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-blue-800 text-sm font-medium">
+        <div className="bg-violet-50 border border-violet-200 rounded-xl p-4 text-violet-800 text-sm font-medium">
           ✓ בקשת שינוי המועד נשלחה. נשלח אימייל לאישור בקרוב.
         </div>
       )}
@@ -260,7 +260,7 @@ export default function ManageBookingPage() {
       {/* Reschedule modal */}
       <Modal open={showReschedule} onClose={() => setShowReschedule(false)} title="בקשת שינוי מועד">
         <div className="space-y-4">
-          <div className="bg-blue-50 rounded-lg p-3 text-sm text-blue-800">
+          <div className="bg-violet-50 rounded-lg p-3 text-sm text-violet-800">
             <p className="font-medium">מועד נוכחי:</p>
             <p>{formatDate(booking.event_date)} בשעה {formatTime(booking.start_time)} • {formatDuration(booking.duration_minutes)}</p>
           </div>
@@ -292,7 +292,7 @@ export default function ManageBookingPage() {
                   key={opt.value}
                   onClick={() => setRescheduleDuration(opt.value)}
                   className={`py-1.5 px-2 rounded-lg border text-xs font-medium transition-colors ${
-                    rescheduleDuration === opt.value ? 'bg-blue-600 border-blue-600 text-white' : 'bg-white border-gray-300 text-gray-700 hover:border-blue-400'
+                    rescheduleDuration === opt.value ? 'bg-violet-600 border-violet-600 text-white' : 'bg-white border-gray-300 text-gray-700 hover:border-violet-400'
                   }`}
                 >
                   {opt.label}
@@ -308,7 +308,7 @@ export default function ManageBookingPage() {
           <div className="space-y-1">
             <label className="block text-sm font-medium text-gray-700">הערות (אופציונלי)</label>
             <textarea
-              className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
               rows={2}
               value={rescheduleNotes}
               onChange={e => setRescheduleNotes(e.target.value)}

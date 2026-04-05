@@ -23,7 +23,7 @@ function generateSlots(): string[] {
 const SLOTS = generateSlots();
 
 const ROOM_COLORS = [
-  'bg-blue-100 text-blue-800 border-blue-200',
+  'bg-violet-100 text-blue-800 border-violet-200',
   'bg-purple-100 text-purple-800 border-purple-200',
   'bg-emerald-100 text-emerald-800 border-emerald-200',
   'bg-orange-100 text-orange-800 border-orange-200',
@@ -95,13 +95,13 @@ export default function CalendarPage() {
             <div className="flex rounded-lg border border-gray-200 overflow-hidden">
               <button
                 onClick={() => setView('week')}
-                className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'week' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'week' ? 'bg-violet-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
               >
                 שבועי
               </button>
               <button
                 onClick={() => setView('day')}
-                className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'day' ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+                className={`px-4 py-2 text-sm font-medium transition-colors ${view === 'day' ? 'bg-violet-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
               >
                 יומי
               </button>
@@ -109,7 +109,7 @@ export default function CalendarPage() {
             <button onClick={() => { const d = new Date(weekStart); d.setDate(d.getDate() - 7); setWeekStart(d); }} className="p-2 hover:bg-gray-100 rounded-lg">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
             </button>
-            <button onClick={() => { setWeekStart(getWeekStart(new Date())); setSelectedDay(new Date()); }} className="text-sm text-blue-600 hover:underline px-2">היום</button>
+            <button onClick={() => { setWeekStart(getWeekStart(new Date())); setSelectedDay(new Date()); }} className="text-sm text-violet-600 hover:underline px-2">היום</button>
             <button onClick={() => { const d = new Date(weekStart); d.setDate(d.getDate() + 7); setWeekStart(d); }} className="p-2 hover:bg-gray-100 rounded-lg">
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
             </button>
@@ -125,10 +125,10 @@ export default function CalendarPage() {
               const isSelected = ds === toIsraelDateStr(selectedDay);
               return (
                 <button key={i} onClick={() => { setSelectedDay(day); setView('day'); }}
-                  className={`py-3 flex flex-col items-center transition-colors rounded-xl ${isSelected ? 'bg-blue-50' : 'hover:bg-gray-50'}`}>
+                  className={`py-3 flex flex-col items-center transition-colors rounded-xl ${isSelected ? 'bg-violet-50' : 'hover:bg-gray-50'}`}>
                   <span className="text-xs text-gray-500">{DAY_NAMES_HE[day.getDay()]}</span>
-                  <span className={`text-lg font-semibold mt-0.5 ${isToday ? 'text-blue-600' : 'text-gray-800'}`}>{day.getDate()}</span>
-                  {isToday && <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-0.5" />}
+                  <span className={`text-lg font-semibold mt-0.5 ${isToday ? 'text-violet-600' : 'text-gray-800'}`}>{day.getDate()}</span>
+                  {isToday && <span className="w-1.5 h-1.5 bg-violet-500 rounded-full mt-0.5" />}
                 </button>
               );
             })}
@@ -139,7 +139,7 @@ export default function CalendarPage() {
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           {loading ? (
             <div className="flex items-center justify-center h-64">
-              <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full" />
+              <div className="animate-spin w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full" />
             </div>
           ) : (
             <div className="overflow-auto max-h-[600px]">

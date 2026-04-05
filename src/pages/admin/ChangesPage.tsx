@@ -82,7 +82,7 @@ export default function ChangesPage() {
 
         {loading ? (
           <div className="flex justify-center h-48 items-center">
-            <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full" />
+            <div className="animate-spin w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full" />
           </div>
         ) : (
           <>
@@ -140,7 +140,7 @@ export default function ChangesPage() {
                 סיבת הדחייה <span className="text-gray-400 font-normal">(אופציונלי)</span>
               </label>
               <textarea
-                className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
                 rows={3}
                 value={rejectNotes}
                 onChange={e => setRejectNotes(e.target.value)}
@@ -186,8 +186,8 @@ function ChangeCard({ change, onApprove, onReject, actionLoading }: {
               <p className="text-gray-600">{formatTime(booking?.start_time ?? '')} • {formatDuration(booking?.duration_minutes ?? 0)}</p>
               {booking?.room && <p className="text-gray-500 text-xs mt-0.5">{(booking.room as {name: string}).name}</p>}
             </div>
-            <div className="bg-blue-50 rounded-lg p-3">
-              <p className="text-xs font-medium text-blue-600 mb-1">מועד מבוקש</p>
+            <div className="bg-violet-50 rounded-lg p-3">
+              <p className="text-xs font-medium text-violet-600 mb-1">מועד מבוקש</p>
               <p className="font-medium">{formatDate(change.requested_date ?? '')}</p>
               <p className="text-gray-600">{formatTime(change.requested_start_time ?? '')} • {formatDuration(change.requested_duration_minutes ?? 0)}</p>
             </div>

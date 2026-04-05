@@ -113,7 +113,7 @@ export default function RoomsPage() {
 
         {loading ? (
           <div className="flex justify-center h-48 items-center">
-            <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full" />
+            <div className="animate-spin w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full" />
           </div>
         ) : (
           <div className="grid gap-4">
@@ -190,7 +190,7 @@ export default function RoomsPage() {
           <div className="space-y-1">
             <label className="block text-sm font-medium text-gray-700">תיאור (אופציונלי)</label>
             <textarea
-              className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              className="block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 resize-none"
               rows={2}
               value={form.description}
               onChange={e => setForm(f => ({ ...f, description: e.target.value }))}

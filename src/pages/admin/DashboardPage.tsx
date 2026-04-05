@@ -85,7 +85,7 @@ export default function DashboardPage() {
           <CardBody className="p-0">
             {loading ? (
               <div className="flex items-center justify-center h-40">
-                <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full" />
+                <div className="animate-spin w-8 h-8 border-4 border-violet-500 border-t-transparent rounded-full" />
               </div>
             ) : pending.length === 0 ? (
               <div className="py-16 text-center text-gray-400">
@@ -126,14 +126,14 @@ function StatCard({ label, value, color, icon }: {
   label: string; value: number; color: string; icon: string;
 }) {
   const bg: Record<string, string> = {
-    yellow: 'bg-yellow-50 border-yellow-200',
-    blue: 'bg-blue-50 border-blue-200',
-    green: 'bg-green-50 border-green-200',
+    yellow: 'bg-amber-50 border-amber-200',
+    blue: 'bg-violet-50 border-violet-200',
+    green: 'bg-emerald-50 border-emerald-200',
   };
   const text: Record<string, string> = {
-    yellow: 'text-yellow-700',
-    blue: 'text-blue-700',
-    green: 'text-green-700',
+    yellow: 'text-amber-700',
+    blue: 'text-violet-700',
+    green: 'text-emerald-700',
   };
   return (
     <div className={`rounded-xl border p-5 ${bg[color]}`}>
