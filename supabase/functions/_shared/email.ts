@@ -36,16 +36,17 @@ function baseTemplate(content: string): string {
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:Arial,Helvetica,sans-serif;background:#f5f5f5;color:#1a1a1a;direction:rtl}
-  .wrap{max-width:600px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-  .header{background:#1d4ed8;padding:24px 32px;color:#fff}
-  .header h1{font-size:20px;font-weight:700}
-  .header p{font-size:13px;opacity:.8;margin-top:4px}
-  .body{padding:32px}
-  h2{font-size:17px;font-weight:600;margin-bottom:16px;color:#1e40af}
-  .info-table{width:100%;border-collapse:collapse;margin-bottom:20px}
-  .info-table td{padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:14px;vertical-align:top}
-  .info-table td:first-child{font-weight:600;white-space:nowrap;color:#374151;width:40%}
+  body{font-family:Arial,Helvetica,sans-serif;background:#f5f5f5;color:#1a1a1a;direction:rtl;text-align:right}
+  .wrap{max-width:600px;margin:32px auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);direction:rtl;text-align:right}
+  .header{background:#1d4ed8;padding:24px 32px;color:#fff;text-align:right}
+  .header h1{font-size:20px;font-weight:700;text-align:right}
+  .header p{font-size:13px;opacity:.8;margin-top:4px;text-align:right}
+  .body{padding:32px;text-align:right}
+  h2{font-size:17px;font-weight:600;margin-bottom:16px;color:#1e40af;text-align:right}
+  p{text-align:right}
+  .info-table{width:100%;border-collapse:collapse;margin-bottom:20px;direction:rtl}
+  .info-table td{padding:8px 12px;border-bottom:1px solid #f0f0f0;font-size:14px;vertical-align:top;text-align:right}
+  .info-table td:first-child{font-weight:600;white-space:nowrap;color:#374151;width:40%;text-align:right}
   .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
   .badge-pending{background:#fef9c3;color:#854d0e}
   .badge-approved{background:#dcfce7;color:#166534}
@@ -55,16 +56,16 @@ function baseTemplate(content: string): string {
   .btn{display:inline-block;background:#1d4ed8;color:#fff;text-decoration:none;padding:12px 24px;border-radius:6px;font-size:14px;font-weight:600;margin-top:16px}
   .footer{background:#f9fafb;padding:16px 32px;font-size:12px;color:#9ca3af;text-align:center}
   .divider{border:none;border-top:1px solid #e5e7eb;margin:20px 0}
-  .note-box{background:#fef3c7;border-right:4px solid #f59e0b;padding:12px 16px;border-radius:4px;font-size:14px;margin-top:16px}
+  .note-box{background:#fef3c7;border-right:4px solid #f59e0b;padding:12px 16px;border-radius:4px;font-size:14px;margin-top:16px;text-align:right}
 </style>
 </head>
-<body>
-<div class="wrap">
-  <div class="header">
-    <h1>מערכת שריון חדרים</h1>
-    <p>ניהול חדרי הדרכה</p>
+<body style="direction:rtl;text-align:right">
+<div class="wrap" dir="rtl" style="direction:rtl;text-align:right">
+  <div class="header" dir="rtl" style="text-align:right">
+    <h1 style="text-align:right">מערכת שריון חדרים</h1>
+    <p style="text-align:right">ניהול חדרי הדרכה</p>
   </div>
-  <div class="body">${content}</div>
+  <div class="body" dir="rtl" style="text-align:right">${content}</div>
   <div class="footer">מערכת שריון חדרים — הודעה אוטומטית, אין להשיב על מייל זה</div>
 </div>
 </body>
@@ -72,7 +73,7 @@ function baseTemplate(content: string): string {
 }
 
 function infoRow(label: string, value: string): string {
-  return `<tr><td>${label}</td><td>${value}</td></tr>`;
+  return `<tr dir="rtl"><td style="font-weight:600;color:#374151;width:40%;text-align:right;padding:8px 12px;border-bottom:1px solid #f0f0f0;vertical-align:top">${label}</td><td style="text-align:right;padding:8px 12px;border-bottom:1px solid #f0f0f0;vertical-align:top">${value}</td></tr>`;
 }
 
 // ── Email type interfaces ─────────────────────────────────────
@@ -144,9 +145,9 @@ export async function sendBookingReceived(info: BookingInfo): Promise<void> {
     </table>
     <hr class="divider">
     <p style="font-size:14px;margin-bottom:8px">לניהול השריון שלך (ביטול / שינוי מועד) היכנס לאתר והזן את מספר ההזמנה:</p>
-    <div style="background:#f0f4ff;border:2px dashed #1d4ed8;border-radius:8px;padding:20px;text-align:center;margin:12px 0">
-      <p style="font-size:12px;color:#6b7280;margin-bottom:6px">מספר הזמנה</p>
-      <p style="font-size:36px;font-weight:700;color:#1d4ed8;letter-spacing:6px;font-family:monospace">${info.cancellationCode}</p>
+    <div style="background:#f0f4ff;border:2px dashed #1d4ed8;border-radius:8px;padding:20px;text-align:center !important;margin:12px 0;direction:ltr">
+      <p style="font-size:12px;color:#6b7280;margin-bottom:6px;text-align:center">מספר הזמנה</p>
+      <p style="font-size:36px;font-weight:700;color:#1d4ed8;letter-spacing:6px;font-family:monospace;text-align:center">${info.cancellationCode}</p>
     </div>
     <div class="note-box" style="margin-top:20px">שמור על מספר ההזמנה — הוא ייחודי עבורך ומאפשר לנהל את השריון דרך האתר.</div>
   `);
@@ -192,9 +193,9 @@ export async function sendBookingApproved(info: BookingInfo): Promise<void> {
     </table>
     <hr class="divider">
     <p style="font-size:14px;margin-bottom:8px">מספר ההזמנה שלך לניהול השריון:</p>
-    <div style="background:#f0f4ff;border:2px dashed #1d4ed8;border-radius:8px;padding:20px;text-align:center;margin:12px 0">
-      <p style="font-size:12px;color:#6b7280;margin-bottom:6px">מספר הזמנה</p>
-      <p style="font-size:36px;font-weight:700;color:#1d4ed8;letter-spacing:6px;font-family:monospace">${info.cancellationCode}</p>
+    <div style="background:#f0f4ff;border:2px dashed #1d4ed8;border-radius:8px;padding:20px;text-align:center !important;margin:12px 0;direction:ltr">
+      <p style="font-size:12px;color:#6b7280;margin-bottom:6px;text-align:center">מספר הזמנה</p>
+      <p style="font-size:36px;font-weight:700;color:#1d4ed8;letter-spacing:6px;font-family:monospace;text-align:center">${info.cancellationCode}</p>
     </div>
   `);
   await sendEmail({ from: info.fromEmail, to: [info.requesterEmail], subject: 'השריון שלך אושר ✓', html });

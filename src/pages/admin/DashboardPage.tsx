@@ -160,6 +160,9 @@ function PendingBookingRow({ booking, onApprove, onReject }: {
         <p className="text-sm text-gray-700">
           {formatDate(booking.event_date)} | {formatTime(booking.start_time)} | {formatDuration(booking.duration_minutes)} | {booking.participant_count} משתתפים
         </p>
+        <p className="text-xs text-gray-400 mt-0.5">
+          הוגש: {new Date(booking.created_at).toLocaleDateString('he-IL', { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' })}
+        </p>
         {booking.notes && (
           <p className="text-xs text-gray-500 mt-1 italic">"{booking.notes}"</p>
         )}

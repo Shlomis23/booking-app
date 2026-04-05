@@ -12,7 +12,7 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
   const navLinks = [
     { to: '/', label: 'לוח זמינות' },
     { to: '/book', label: 'הזמנת חדר' },
-    { to: '/manage', label: 'ניהול הזמנה' },
+    { to: '/manage', label: 'מעקב הזמנה' },
   ];
 
   return (

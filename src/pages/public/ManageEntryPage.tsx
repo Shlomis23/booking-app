@@ -24,8 +24,8 @@ export default function ManageEntryPage() {
               d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
           </svg>
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">ניהול הזמנה</h1>
-        <p className="text-gray-500 text-sm mt-2">הזן את מספר ההזמנה שקיבלת באימייל</p>
+        <h1 className="text-2xl font-bold text-gray-900">מעקב הזמנה</h1>
+        <p className="text-gray-500 text-sm mt-2">הזן את מספר ההזמנה שקיבלת באימייל או שמופיע על מסך האישור</p>
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">

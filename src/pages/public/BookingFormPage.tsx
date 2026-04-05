@@ -49,6 +49,7 @@ export default function BookingFormPage() {
   const [forceSpecial, setForceSpecial] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [bookingCode, setBookingCode] = useState('');
 
   const durationValue = form.durationMinutes === 0
     ? (parseInt(form.customDuration) || 0)
@@ -122,7 +123,7 @@ export default function BookingFormPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      await callFunction('create-booking', {
+      const result = await callFunction('create-booking', {
         requesterName: form.requesterName.trim(),
         requesterEmail: form.requesterEmail.trim().toLowerCase(),
         eventDate: form.eventDate,
@@ -133,6 +134,7 @@ export default function BookingFormPage() {
         notes: form.notes.trim() || null,
         isSpecial: isSpecial || forceSpecial,
       });
+      if (result?.cancellationCode) setBookingCode(result.cancellationCode);
       setSubmitted(true);
     } catch (err) {
       setErrors({ requesterEmail: err instanceof Error ? err.message : 'שגיאה בשמירת הבקשה' });
@@ -143,17 +145,37 @@ export default function BookingFormPage() {
 
   if (submitted) {
     return (
-      <div className="max-w-lg mx-auto py-12 text-center space-y-4">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-          <svg className="w-8 h-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+      <div className="max-w-lg mx-auto py-10 space-y-5">
+        <div className="text-center space-y-3">
+          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto">
+            <svg className="w-8 h-8 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900">הבקשה התקבלה!</h2>
+          <p className="text-gray-500 text-sm">נשלח אליך אימייל עם פרטי הבקשה.<br />הבקשה ממתינה לאישור הרכז.</p>
         </div>
-        <h2 className="text-2xl font-bold text-gray-900">הבקשה התקבלה!</h2>
-        <p className="text-gray-600">נשלח אליך אימייל עם פרטי הבקשה וקישור לניהול השריון.<br />הבקשה ממתינה לאישור הרכז.</p>
-        <div className="flex gap-3 justify-center mt-6">
-          <Button onClick={() => navigate('/')}>חזרה ללוח זמינות</Button>
-          <Button variant="secondary" onClick={() => { setSubmitted(false); setForm(f => ({ ...f, requesterName: '', requesterEmail: '', notes: '' })); }}>
+
+        {bookingCode && (
+          <div className="bg-violet-50 border-2 border-dashed border-violet-300 rounded-2xl p-6 text-center">
+            <p className="text-sm text-gray-500 mb-2">מספר ההזמנה שלך</p>
+            <p className="text-4xl font-bold text-violet-700 tracking-widest font-mono">{bookingCode}</p>
+            <p className="text-xs text-gray-400 mt-3">שמור מספר זה — תצטרך אותו כדי לעקוב אחר הבקשה, לשנות מועד או לבטל</p>
+          </div>
+        )}
+
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+          <p className="font-semibold mb-1">מה קורה עכשיו?</p>
+          <ol className="space-y-1 text-amber-700 list-decimal list-inside">
+            <li>הרכז יקבל הודעה על בקשתך</li>
+            <li>לאחר בדיקה יאשר ויקצה חדר — או ייצור קשר</li>
+            <li>תקבל אימייל עם אישור סופי</li>
+          </ol>
+        </div>
+
+        <div className="flex gap-3">
+          <Button onClick={() => navigate('/')} className="flex-1">חזרה ללוח זמינות</Button>
+          <Button variant="secondary" onClick={() => { setSubmitted(false); setBookingCode(''); setForm(f => ({ ...f, requesterName: '', requesterEmail: '', notes: '' })); }} className="flex-1">
             הגש בקשה נוספת
           </Button>
         </div>

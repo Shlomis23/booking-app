@@ -120,17 +120,26 @@ export default function AvailabilityPage() {
   return (
     <div className="space-y-5">
       {/* Hero */}
-      <div className="bg-gradient-to-l from-violet-500 to-indigo-500 rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between shadow-lg shadow-indigo-100">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">לוח זמינות חדרים</h1>
-          <p className="text-white/70 text-sm">בחר תאריך וצפה בזמינות כל החדרים</p>
+      <div className="bg-gradient-to-l from-violet-500 to-indigo-500 rounded-2xl p-5 sm:p-6 shadow-lg shadow-indigo-100">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:justify-between">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-white mb-1">לוח זמינות חדרים</h1>
+            <p className="text-white/70 text-sm">בחר תאריך, בחן זמינות ושלח בקשת שריון — הרכז יאשר ויקצה חדר</p>
+          </div>
+          <button
+            onClick={() => navigate('/book')}
+            className="bg-white text-violet-700 font-semibold px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all text-sm w-full sm:w-auto text-center"
+          >
+            + הזמן חדר
+          </button>
         </div>
-        <button
-          onClick={() => navigate('/book')}
-          className="bg-white text-violet-700 font-semibold px-5 py-2.5 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-all text-sm w-full sm:w-auto text-center"
-        >
-          + הזמן חדר
-        </button>
+        <div className="mt-4 flex flex-wrap gap-4 text-white/80 text-xs border-t border-white/20 pt-3">
+          <span>1. בחר תאריך ושעה</span>
+          <span className="text-white/40">›</span>
+          <span>2. הגש בקשת שריון</span>
+          <span className="text-white/40">›</span>
+          <span>3. קבל אישור במייל</span>
+        </div>
       </div>
 
       {/* Week navigation */}
@@ -229,6 +238,13 @@ export default function AvailabilityPage() {
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Click hint */}
+        {rooms.length > 0 && !loading && (
+          <div className="px-4 py-2 bg-violet-50 border-t border-violet-100 text-xs text-violet-600 text-center">
+            לחץ על תא <span className="font-semibold">פנוי</span> כדי להתחיל הזמנה
           </div>
         )}
 

@@ -88,7 +88,7 @@ Deno.serve(async (req) => {
       sendNewBookingAdmin(info),
     ]);
 
-    return new Response(JSON.stringify({ success: true, bookingId: booking.id }), {
+    return new Response(JSON.stringify({ success: true, bookingId: booking.id, cancellationCode: booking.cancellation_code }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
