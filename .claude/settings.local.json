@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(npx supabase:*)",
+      "Bash(SUPABASE_ACCESS_TOKEN=bp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy create-booking --project-ref zxktdczmmidsdwclkuhn --use-api)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy create-booking --project-ref zxktdczmmidsdwclkuhn --use-api)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy booking-manage --project-ref zxktdczmmidsdwclkuhn --use-api)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy admin --project-ref zxktdczmmidsdwclkuhn --use-api)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy create-booking --project-ref zxktdczmmidsdwclkuhn --use-api --no-verify-jwt)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy booking-manage --project-ref zxktdczmmidsdwclkuhn --use-api --no-verify-jwt)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy admin --project-ref zxktdczmmidsdwclkuhn --use-api --no-verify-jwt)",
+      "Bash(for fn:*)",
+      "Bash(do)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy $fn --project-ref zxktdczmmidsdwclkuhn --use-api --no-verify-jwt)",
+      "Bash(done)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase secrets set BREVO_API_KEY=xsmtpsib-de040fe406295a89dd944e6188bbb54c084e309c78b5f0ac830e22a243103ac8-6VHtJ4jKEJFPgNeZ --project-ref zxktdczmmidsdwclkuhn)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions logs create-booking --project-ref zxktdczmmidsdwclkuhn)",
+      "Bash(curl -s -X POST https://api.brevo.com/v3/smtp/email -H \"api-key: xsmtpsib-de040fe406295a89dd944e6188bbb54c084e309c78b5f0ac830e22a243103ac8-6VHtJ4jKEJFPgNeZ\" -H \"Content-Type: application/json\" -d '{:*)",
+      "Bash(curl -s -X POST https://api.brevo.com/v3/smtp/email -H \"api-key: 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\" -H \"Content-Type: application/json\" -d '{:*)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase secrets set BREVO_API_KEY=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 --project-ref zxktdczmmidsdwclkuhn)",
+      "Bash(curl -s -X POST https://zxktdczmmidsdwclkuhn.supabase.co/functions/v1/create-booking -H \"Content-Type: application/json\" -H \"apikey: sb_publishable_kxvD8bZkbyCTy3qR_einTA_dQYqmOf6\" -H \"Authorization: Bearer sb_publishable_kxvD8bZkbyCTy3qR_einTA_dQYqmOf6\" -d '{:*)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase secrets set ADMIN_FROM_EMAIL=Shlomi.sela@yashir.co.il --project-ref zxktdczmmidsdwclkuhn)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase secrets set ADMIN_FROM_EMAIL=selaaa@gmail.com --project-ref zxktdczmmidsdwclkuhn)",
+      "Bash(do SUPABASE_ACCESS_TOKEN=sbp_19ac34c095b782077912de7404ed4b85df5ef60e npx supabase functions deploy $fn --project-ref zxktdczmmidsdwclkuhn --use-api --no-verify-jwt)"
+    ]
+  }
+}

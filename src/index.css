@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Rubik', Arial, Helvetica, sans-serif;
+  direction: rtl;
+}
+
+body {
+  @apply bg-gray-50 text-gray-900;
+  direction: rtl;
+}
+
+/* RTL scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+/* Smooth focus ring */
+*:focus-visible {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+}
+
+/* Calendar slot transitions */
+.slot-cell {
+  @apply transition-colors duration-100;
+}
+
+/* Table RTL fix */
+th, td {
+  text-align: right;
+}
